@@ -40,6 +40,11 @@ Este taller muestra el uso de widgets básicos y manejo de estado en Flutter. In
 - Código: [230221007]
 # taller1
 
+## Enlaces de Pull Requests
+
+- PR `feature/taller1 → dev`: [Ver aquí](https://github.com/AngieC23/curso-moviles-flutter/pull/1)
+- PR `dev → main`: [Ver aquí](https://github.com/AngieC23/curso-moviles-flutter/pull/2)
+
 A new Flutter project.
 
 ## Getting Started
