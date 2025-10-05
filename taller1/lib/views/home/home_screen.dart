@@ -120,13 +120,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () => context.push('/widgets_demo'),
                 ),
                 _DashboardCard(
-                  icon: Icons.info_outline,
-                  color: Colors.orange,
-                  title: 'Más info',
+                  icon: Icons.menu_book,
+                  color: Colors.teal,
+                  title: 'Ver Menú Completo',
                   onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Acción secundaria')),
-                    );
+                    // Abrir el drawer programáticamente
+                    Scaffold.of(context).openDrawer();
                   },
                 ),
               ],

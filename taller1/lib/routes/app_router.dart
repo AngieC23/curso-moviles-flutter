@@ -1,8 +1,11 @@
 import 'package:go_router/go_router.dart';
 import '../views/ciclo_vida/ciclo_vida_screen.dart';
+import '../views/future/future_async_screen.dart';
 import '../views/home/home_screen.dart';
+import '../views/isolate/isolate_advanced_screen.dart';
 import '../views/paso_parametros/detalle_screen.dart';
 import '../views/paso_parametros/paso_parametros_screen.dart';
+import '../views/timer/timer_screen.dart';
 import '../views/widgets_demo/widgets_demo_screen.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -30,6 +33,18 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/widgets_demo',
       builder: (context, state) => const WidgetsDemoScreen(),
+    ),
+    GoRoute(
+      path: '/future_async',
+      builder: (context, state) => const FutureAsyncScreen(),
+    ),
+    GoRoute(
+      path: '/timer',
+      builder: (context, state) => const TimerScreen(),
+    ),
+    GoRoute(
+      path: '/isolate',
+      builder: (context, state) => const IsolateAdvancedScreen(),
     ),
   ],
 );
