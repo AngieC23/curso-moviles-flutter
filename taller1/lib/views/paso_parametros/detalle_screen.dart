@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../widgets/custom_drawer.dart';
 
 class DetalleScreen extends StatelessWidget {
@@ -22,6 +23,15 @@ class DetalleScreen extends StatelessWidget {
           children: [
             Text('Parámetro recibido: $parametro'),
             Text('Método de navegación: $metodoNavegacion'),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.arrow_back),
+              label: const Text('Volver al Dashboard'),
+              onPressed: () {
+                // Regresa al dashboard usando go_router
+                context.go('/');
+              },
+            ),
           ],
         ),
       ),

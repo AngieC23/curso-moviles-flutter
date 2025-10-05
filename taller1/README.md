@@ -1,81 +1,266 @@
-# Taller Flutter: Widgets y Estado
+# 📱 Taller Flutter - Desarrollo Móvil UCEVA
 
-## Descripción
-Este taller muestra el uso de widgets básicos y manejo de estado en Flutter. Incluye:
-- AppBar con título dinámico usando setState().
-- SnackBar al cambiar el título.
-- Contador con botones flotantes.
-- Dos imágenes (de red y local) debajo del nombre.
-- Stack con texto sobre imagen.
-- ListView con 4 elementos (icono y texto).
+## 🎯 Descripción del Proyecto
 
-## Pasos para ejecutar
-1. Clona el repositorio o descarga el proyecto.
-2. Abre la carpeta en VS Code o tu editor favorito.
-3. Ejecuta en terminal:
-	```
-	flutter pub get
-	flutter run
-	```
-4. Asegúrate de tener la imagen local en `assets/images/logo.png` y la ruta registrada en `pubspec.yaml`.
+Este proyecto es una aplicación educativa de Flutter que demuestra conceptos avanzados de **asincronía**, **manejo de tiempo** y **procesamiento paralelo** en el desarrollo móvil. Desarrollado como parte del curso de Desarrollo Móvil de la Universidad UCEVA.
 
-## Funcionamiento
-- Estado inicial: El AppBar muestra "Hola, Flutter".
-- Al presionar el botón "Siguiente" en el AppBar, el título cambia a "¡Título cambiado!" y aparece un SnackBar con el mensaje "Título actualizado".
-- Los widgets adicionales (Stack y ListView) se muestran en la pantalla.
+### 📚 Conceptos Implementados
 
-## Capturas
+- **Future/Async/Await**: Manejo de operaciones asíncronas
+- **Timer**: Cronómetros y actualizaciones periódicas
+- **Isolates**: Procesamiento paralelo para tareas pesadas
+- **Navegación**: Sistema de rutas con Go Router
+- **Estados**: Gestión del ciclo de vida de widgets
 
-### Estado inicial de la app
-![Estado inicial](assets/images/Estado_inicial.png)
+---
 
-### Estado tras presionar el botón (título cambiado + SnackBar)
-![Título cambiado y SnackBar](assets/images/Cambiar_titulo.jpg)
+## 🏗️ Arquitectura del Proyecto
 
-### Funcionamiento de los widgets adicionales
-![Widgets adicionales](assets/images/Otros_widgets.jpg)
+```
+taller1/
+├── lib/
+│   ├── main.dart                    # Punto de entrada
+│   ├── routes/
+│   │   └── app_router.dart         # Configuración de navegación
+│   ├── views/
+│   │   ├── home/                   # Dashboard principal
+│   │   ├── future/                 # Demo de Future/Async
+│   │   ├── timer/                  # Demo de Timer
+│   │   ├── isolate/               # Demo de Isolates
+│   │   ├── paso_parametros/       # Navegación con parámetros
+│   │   ├── ciclo_vida/           # Ciclo de vida de widgets
+│   │   └── widgets_demo/         # Demostración de widgets
+│   ├── widgets/
+│   │   ├── base_view.dart        # Layout base consistente
+│   │   └── custom_drawer.dart    # Drawer de navegación
+│   └── themes/
+│       └── app_theme.dart        # Tema personalizado
+```
 
-## Datos del estudiante
-- Nombre completo: Angie Tatiana Cardenas
-- Código: [230221007]
-# taller1
+---
 
-## Enlaces de Pull Requests
+## 🎮 Pantallas y Funcionalidades
 
-- PR `feature/taller1 → dev`: [Ver aquí](https://github.com/AngieC23/curso-moviles-flutter/pull/1)
-- PR `dev → main`: [Ver aquí](https://github.com/AngieC23/curso-moviles-flutter/pull/2)
+### 🏠 **Dashboard Principal**
+- **Archivo**: `lib/views/home/home_screen.dart`
+- **Función**: Punto de entrada con acceso a todas las funcionalidades
+- **Características**:
+  - Grid de navegación organizado
+  - Información del estudiante
+  - Acceso al drawer con funciones avanzadas
 
-A new Flutter project.
+### ⏰ **Future / Async / Await**
+- **Archivo**: `lib/views/future/future_async_screen.dart`
+- **Función**: Demuestra manejo de operaciones asíncronas
+- **Características**:
+  - Múltiples tipos de consultas simuladas
+  - Estados de carga, éxito y error
+  - Consultas concurrentes con `Future.wait()`
+  - Logs detallados en consola
 
-## Getting Started
+### ⏱️ **Timer / Cronómetro**
+- **Archivo**: `lib/views/timer/timer_screen.dart`
+- **Función**: Cronómetro completo con estados
+- **Características**:
+  - Timer que actualiza cada 100ms
+  - Estados: Detenido, Corriendo, Pausado
+  - Controles: Iniciar, Pausar, Reanudar, Reiniciar
+  - Display estilo marcador digital
+  - Limpieza automática de recursos
 
-This project is a starting point for a Flutter application.
+### 🧠 **Isolates Pesados**
+- **Archivo**: `lib/views/isolate/isolate_advanced_screen.dart`
+- **Función**: Tareas CPU-intensivas en hilos separados
+- **Características**:
+  - 5 tipos de tareas pesadas diferentes
+  - Ejecución individual o en paralelo
+  - Estadísticas de rendimiento
+  - UI que nunca se bloquea
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🔄 Flujos de Trabajo
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 📊 **Flujo del Cronómetro**
 
-## Arquitectura y Navegación
+```
+[Detenido] --Iniciar--> [Corriendo] --Pausar--> [Pausado]
+    ^                        |                     |
+    |                   Reiniciar             Reanudar
+    |                        |                     |
+    +------------------------+                     |
+    |                                              |
+    +----------------------------------------------+
+                    Reiniciar
+```
 
-La app usa `go_router` para la navegación entre pantallas:
+**Estados del Timer:**
+1. **Detenido** ⚫: Tiempo en 00:00:00, puede iniciar
+2. **Corriendo** 🟢: Timer activo, actualiza cada 100ms
+3. **Pausado** 🟡: Timer detenido temporalmente, mantiene tiempo
+
+### 🔀 **Flujo de Isolates**
+
+```
+[Solicitar Tarea] → [Crear Isolate] → [Configurar Comunicación] 
+       ↓
+[Enviar Parámetros] → [Ejecutar Tarea Pesada] → [Enviar Resultado]
+       ↓
+[Actualizar UI] → [Limpiar Isolate]
+```
+
+**Tipos de Tareas:**
+1. **Fibonacci(35)**: Cálculo recursivo ~1-2 segundos
+2. **Números Primos**: Encuentra primos hasta 100,000
+3. **Bubble Sort**: Ordena 5,000 números (O(n²))
+4. **Matriz Grande**: Procesa matriz 200x200
+5. **Big Data**: Genera 50,000 registros JSON
+
+---
+
+## 📘 Cuándo Usar Cada Tecnología
+
+### 🎯 **Future / Async / Await**
+
+**✅ Usar cuando:**
+- Consultas a APIs o bases de datos
+- Operaciones de archivo (lectura/escritura)
+- Navegación entre pantallas con datos
+- Cualquier operación que pueda tardar tiempo
+
+**❌ No usar cuando:**
+- Tareas que requieren procesamiento intensivo de CPU
+- Operaciones que bloquearían la UI por más de unos segundos
+- Cálculos matemáticos complejos
+
+**💡 Ejemplo de uso:**
+```dart
+Future<List<User>> fetchUsers() async {
+  final response = await http.get('/api/users');
+  return User.fromJsonList(response.data);
+}
+```
+
+### ⏲️ **Timer**
+
+**✅ Usar cuando:**
+- Cronómetros y temporizadores
+- Actualizaciones periódicas de UI
+- Animaciones personalizadas
+- Polling de datos en intervalos
+
+**❌ No usar cuando:**
+- Animaciones complejas (usar AnimationController)
+- Operaciones únicas (usar Future)
+- Tareas que requieren alta precisión temporal
+
+**💡 Ejemplo de uso:**
+```dart
+Timer.periodic(Duration(seconds: 1), (timer) {
+  setState(() {
+    currentTime = DateTime.now();
+  });
+});
+```
+
+### 🔀 **Isolates**
+
+**✅ Usar cuando:**
+- Procesamiento de imágenes grandes
+- Cálculos matemáticos complejos
+- Parsing de archivos JSON/XML grandes
+- Algoritmos de ordenamiento/búsqueda
+- Cualquier tarea que bloquee la UI
+
+**❌ No usar cuando:**
+- Operaciones simples y rápidas
+- Consultas de red (usar Future)
+- Operaciones que requieren acceso a UI
+- Tareas que usan plugins de plataforma
+
+**💡 Ejemplo de uso:**
+```dart
+// Para procesar imagen grande sin bloquear UI
+await Isolate.spawn(processImageIsolate, imagePath);
+```
+
+---
+
+## 🎨 Navegación y UX
+
+### 📱 **Drawer Organizado**
+
+**Navegación Principal:**
+- 🏠 Inicio
+- ↔️ Paso de Parámetros
+- 🌀 Ciclo de Vida
+- 🧩 Demo de Widgets
+
+**Funcionalidades Avanzadas:**
+- ⏰ Future / Async
+- ⏱️ Timer
+- 🧠 Isolates
+
+### 🎯 **Principios de UX Aplicados**
+
+1. **Estados Visuales Claros**: Cada operación muestra su estado
+2. **Feedback Inmediato**: Loading indicators y mensajes
+3. **Navegación Intuitiva**: Drawer organizado por categorías
+4. **Consistencia Visual**: BaseView para layout uniforme
+5. **Gestión de Recursos**: Limpieza automática en dispose()
+
+---
+
+## 👥 Información del Proyecto
+
+**Estudiante**: Angie Tatiana Cardenas Quintero  
+**Código**: 230221007  
+**Universidad**: UCEVA (Unidad Central del Valle del Cauca)  
+**Curso**: Desarrollo de Aplicaciones Móviles  
+**Tecnología**: Flutter & Dart  
+**Fecha**: Octubre 2025
+---
+
+## 🗺️ Rutas de Navegación
+
+La app usa `go_router` para navegación declarativa:
+
+```dart
+// Rutas principales
 - `/` : HomeScreen (dashboard principal)
-- `/paso_parametros` : PasoParametrosScreen (envío de parámetros y navegación go/push/replace)
-- `/detalle/:parametro/:metodo` : DetalleScreen (muestra el parámetro y método de navegación)
-- `/ciclo_vida` : CicloVidaScreen (demostración del ciclo de vida de StatefulWidget)
-- `/widgets_demo` : WidgetsDemoScreen (ejemplo de GridView, TabBar y ListView)
+- `/paso_parametros` : PasoParametrosScreen (navegación con parámetros)
+- `/detalle/:parametro/:metodo` : DetalleScreen (pantalla de detalles)
+- `/ciclo_vida` : CicloVidaScreen (ciclo de vida de widgets)
+- `/widgets_demo` : WidgetsDemoScreen (demostración de widgets)
 
-Los parámetros se envían en la URL y se reciben en la pantalla destino usando `state.pathParameters`.
+// Rutas avanzadas
+- `/future_async` : FutureAsyncScreen (demo de asincronía)
+- `/timer` : TimerScreen (cronómetro con Timer)
+- `/isolate` : IsolateAdvancedScreen (tareas pesadas en isolates)
+```
 
-## Widgets usados y razón
+---
 
-- **GridView**: Para mostrar elementos en formato de cuadrícula, útil para dashboards y galerías.
-- **TabBar + TabBarView**: Para organizar contenido en secciones navegables dentro de una misma pantalla.
-- **ListView**: Para mostrar listas verticales de elementos.
-- **CustomDrawer**: Menú lateral para navegación rápida entre pantallas.
-- **Botones con SnackBar**: Para acciones secundarias y feedback al usuario.
-- **Imágenes (network y asset)**: Para enriquecer visualmente la interfaz.
+## 🧩 Widgets y Componentes Utilizados
+
+### 📱 **Widgets de UI**
+- **GridView**: Dashboards y galerías organizadas
+- **TabBar + TabBarView**: Contenido en pestañas navegables
+- **ListView**: Listas verticales de elementos
+- **CustomDrawer**: Menú lateral organizado por categorías
+- **BaseView**: Layout consistente para todas las pantallas
+
+### 🎯 **Widgets de Estado**
+- **StatefulWidget**: Para componentes con manejo de estado
+- **CircularProgressIndicator**: Indicadores de carga
+- **SnackBar**: Feedback al usuario
+- **ElevatedButton**: Botones de acción principales
+
+### 🎨 **Widgets de Presentación**
+- **Card**: Contenedores con elevación
+- **Container**: Layout y decoración
+- **Image (network/asset)**: Recursos visuales
+- **Text con estilos**: Tipografía consistente
+
+---
+
