@@ -38,14 +38,18 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
 
     try {
       print('⏳ [Op-$operationId] DURANTE: Esperando respuesta del servicio...');
-      
+
       // Aquí async/await NO bloquea la UI
       final usuarios = await DataService.obtenerUsuarios();
-      
-      print('📊 [Op-$operationId] Datos recibidos: ${usuarios.length} usuarios');
-      
+
+      print(
+        '📊 [Op-$operationId] Datos recibidos: ${usuarios.length} usuarios',
+      );
+
       if (!mounted) {
-        print('⚠️ [Op-$operationId] Widget desmontado, cancelando actualización');
+        print(
+          '⚠️ [Op-$operationId] Widget desmontado, cancelando actualización',
+        );
         return;
       }
 
@@ -55,10 +59,9 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
       });
 
       print('🎯 [Op-$operationId] DESPUÉS: Operación completada exitosamente');
-
     } catch (e) {
       print('💥 [Op-$operationId] DURANTE: Error capturado - $e');
-      
+
       if (!mounted) return;
 
       setState(() {
@@ -84,7 +87,7 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
     try {
       print('⏳ [Op-$operationId] DURANTE: Consultando productos...');
       final productos = await DataService.obtenerProductos();
-      
+
       if (!mounted) return;
 
       setState(() {
@@ -92,10 +95,9 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
       });
 
       print('✅ [Op-$operationId] DESPUÉS: Productos cargados exitosamente');
-
     } catch (e) {
       print('💥 [Op-$operationId] DURANTE: Error en productos - $e');
-      
+
       if (!mounted) return;
 
       setState(() {
@@ -116,17 +118,18 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
     });
 
     try {
-      print('⏳ [Op-$operationId] DURANTE: Ejecutando consulta destinada al fracaso...');
+      print(
+        '⏳ [Op-$operationId] DURANTE: Ejecutando consulta destinada al fracaso...',
+      );
       final data = await DataService.obtenerDatosConError();
-      
+
       // Esto nunca se ejecutará
       setState(() {
         _errorResult = AsyncResult.success(data);
       });
-
     } catch (e) {
       print('🎯 [Op-$operationId] DURANTE: Error esperado capturado - $e');
-      
+
       if (!mounted) return;
 
       setState(() {
@@ -147,20 +150,25 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
     });
 
     try {
-      print('⏳ [Op-$operationId] DURANTE: Ejecutando múltiples futures en paralelo...');
+      print(
+        '⏳ [Op-$operationId] DURANTE: Ejecutando múltiples futures en paralelo...',
+      );
       final datos = await DataService.obtenerTodosLosDatos();
-      
+
       if (!mounted) return;
 
       setState(() {
         _concurrentResult = AsyncResult.success(datos);
       });
 
-      print('✅ [Op-$operationId] DESPUÉS: Todas las consultas concurrentes completadas');
-
+      print(
+        '✅ [Op-$operationId] DESPUÉS: Todas las consultas concurrentes completadas',
+      );
     } catch (e) {
-      print('💥 [Op-$operationId] DURANTE: Error en consultas concurrentes - $e');
-      
+      print(
+        '💥 [Op-$operationId] DURANTE: Error en consultas concurrentes - $e',
+      );
+
       if (!mounted) return;
 
       setState(() {
@@ -194,7 +202,7 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
           children: [
             // Información inicial
             Card(
-              color: Colors.blue.shade50,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -204,7 +212,7 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
                       '🎯 Demo de Asincronía en Flutter',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue.shade800,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -219,7 +227,7 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 16),
 
             // Botones de acción
@@ -317,10 +325,7 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
           children: [
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             _buildStateWidget(result),
@@ -341,14 +346,13 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
           children: [
             const Text(
               '🌐 Consultas Concurrentes',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             if (_concurrentResult.isIdle)
-              const Text('Presiona el botón para ejecutar múltiples consultas en paralelo'),
+              const Text(
+                'Presiona el botón para ejecutar múltiples consultas en paralelo',
+              ),
             if (_concurrentResult.isLoading)
               const Row(
                 children: [
@@ -369,8 +373,8 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  ...(_concurrentResult.data!.entries.map((entry) => 
-                    Padding(
+                  ...(_concurrentResult.data!.entries.map(
+                    (entry) => Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -382,7 +386,7 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
                           ...entry.value.map((item) => Text('  • $item')),
                         ],
                       ),
-                    )
+                    ),
                   )),
                 ],
               ),
@@ -402,7 +406,7 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
     if (result.isIdle) {
       return const Text('Presiona el botón para cargar datos');
     }
-    
+
     if (result.isLoading) {
       return const Row(
         children: [
@@ -412,14 +416,14 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
         ],
       );
     }
-    
+
     if (result.isError) {
       return Text(
         '❌ Error: ${result.error}',
         style: const TextStyle(color: Colors.red),
       );
     }
-    
+
     if (result.isSuccess && result.hasData) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -436,7 +440,7 @@ class _FutureAsyncScreenState extends State<FutureAsyncScreen> {
         ],
       );
     }
-    
+
     return const Text('Estado desconocido');
   }
 

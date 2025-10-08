@@ -1,7 +1,10 @@
 import 'package:go_router/go_router.dart';
+import '../models/joke.dart';
 import '../views/ciclo_vida/ciclo_vida_screen.dart';
 import '../views/future/future_async_screen.dart';
 import '../views/home/home_screen.dart';
+import '../views/http-api/http_api_screen.dart';
+import '../views/http-api/joke_detail_screen.dart';
 import '../views/isolate/isolate_advanced_screen.dart';
 import '../views/paso_parametros/detalle_screen.dart';
 import '../views/paso_parametros/paso_parametros_screen.dart';
@@ -45,6 +48,17 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/isolate',
       builder: (context, state) => const IsolateAdvancedScreen(),
+    ),
+    GoRoute(
+      path: '/http_api',
+      builder: (context, state) => const HttpApiScreen(),
+    ),
+    GoRoute(
+      path: '/joke_detail',
+      builder: (context, state) {
+        final joke = state.extra as Joke;
+        return JokeDetailScreen(joke: joke);
+      },
     ),
   ],
 );

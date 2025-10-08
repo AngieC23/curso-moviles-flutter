@@ -9,8 +9,10 @@ Este proyecto es una aplicación educativa de Flutter que demuestra conceptos av
 - **Future/Async/Await**: Manejo de operaciones asíncronas
 - **Timer**: Cronómetros y actualizaciones periódicas
 - **Isolates**: Procesamiento paralelo para tareas pesadas
+- **HTTP API**: Consumo de APIs REST con manejo de estados
 - **Navegación**: Sistema de rutas con Go Router
 - **Estados**: Gestión del ciclo de vida de widgets
+- **Variables de Entorno**: Configuración con flutter_dotenv
 
 ---
 
@@ -22,11 +24,16 @@ taller1/
 │   ├── main.dart                    # Punto de entrada
 │   ├── routes/
 │   │   └── app_router.dart         # Configuración de navegación
+│   ├── models/
+│   │   └── joke.dart              # Modelo de datos con fromJson
+│   ├── services/
+│   │   └── chuck_norris_service.dart # Servicio HTTP para API
 │   ├── views/
 │   │   ├── home/                   # Dashboard principal
 │   │   ├── future/                 # Demo de Future/Async
 │   │   ├── timer/                  # Demo de Timer
 │   │   ├── isolate/               # Demo de Isolates
+│   │   ├── http-api/              # Consumo de API REST
 │   │   ├── paso_parametros/       # Navegación con parámetros
 │   │   ├── ciclo_vida/           # Ciclo de vida de widgets
 │   │   └── widgets_demo/         # Demostración de widgets
@@ -76,6 +83,19 @@ taller1/
   - Ejecución individual o en paralelo
   - Estadísticas de rendimiento
   - UI que nunca se bloquea
+
+### 🌐 **HTTP API - Chuck Norris Facts**
+- **Archivos**: `lib/views/http-api/http_api_screen.dart` y `joke_detail_screen.dart`
+- **Función**: Consumo completo de API REST
+- **Características**:
+  - **Listado**: ListView.builder con imágenes y estados
+  - **Detalle**: Navegación con go_router y parámetros
+  - **Estados**: Loading, éxito, error con UI apropiada
+  - **Búsqueda**: Por texto libre y filtro por categorías
+  - **Manejo de errores**: Try/catch con mensajes amigables
+  - **Service separado**: Lógica HTTP independiente
+  - **Model con fromJson**: Parseo automático de JSON
+  - **Variables de entorno**: Configuración con .env
 
 ---
 
@@ -200,6 +220,7 @@ await Isolate.spawn(processImageIsolate, imagePath);
 - ⏰ Future / Async
 - ⏱️ Timer
 - 🧠 Isolates
+- 🌐 HTTP API
 
 ### 🎯 **Principios de UX Aplicados**
 
@@ -208,6 +229,81 @@ await Isolate.spawn(processImageIsolate, imagePath);
 3. **Navegación Intuitiva**: Drawer organizado por categorías
 4. **Consistencia Visual**: BaseView para layout uniforme
 5. **Gestión de Recursos**: Limpieza automática en dispose()
+
+---
+
+## 🌐 Chuck Norris API - Implementación Completa
+
+### 📋 **Requisitos Cumplidos**
+
+#### **1) Consumo de API y Listado**
+- **ListView.builder** con renderizado eficiente
+- **Imágenes** mostradas con Image.network y manejo de errores
+- **Estados completos**: Loading (CircularProgressIndicator), Éxito, Error
+- **Service separado**: `ChuckNorrisService` con lógica HTTP independiente
+- **Model con fromJson**: `Joke` model con parseo automático de JSON
+
+#### **2) Detalle con navegación (go_router)**
+- **Navegación**: `context.push('/joke_detail', extra: joke)`
+- **Parámetros**: Objeto Joke completo pasado como extra
+- **Pantalla detalle**: Información ampliada con imagen y metadatos
+- **Botón atrás**: `context.pop()` funcional
+
+#### **3) Manejo de estado y validación**
+- **Try/catch**: En todos los métodos del servicio
+- **StatusCode**: Verificación de response.statusCode == 200
+- **Estados en UI**: LoadingState enum con switch case
+- **Excepciones específicas**: TimeoutException, SocketException, etc.
+
+#### **4) Buenas prácticas mínimas**
+- **Peticiones en initState()**: No en build()
+- **Async/await**: Implementación correcta sin bloquear UI
+- **Mensajes claros**: SnackBar para errores de red
+- **Variables de entorno**: Configuración con flutter_dotenv
+
+### 🛠️ **API Endpoints Utilizados**
+
+```dart
+// Chiste aleatorio
+GET https://api.chucknorris.io/jokes/random
+
+// Chiste por categoría
+GET https://api.chucknorris.io/jokes/random?category={category}
+
+// Buscar chistes
+GET https://api.chucknorris.io/jokes/search?query={query}
+
+// Obtener categorías
+GET https://api.chucknorris.io/jokes/categories
+```
+
+### 📱 **Funcionalidades Extra Implementadas**
+
+- **Búsqueda en tiempo real** con validación
+- **Filtro por categorías** con dropdown
+- **Pull-to-refresh** en la lista
+- **Carga paralela** de múltiples chistes
+- **Deduplicación** por ID de chiste
+- **Estados de carga en imágenes** con placeholders
+- **Botones de acción** (Copiar, Compartir)
+- **Configuración de timeout** (10 segundos)
+
+### 🎯 **Arquitectura Implementada**
+
+```
+HTTP API Flow:
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   UI Screen     │───▶│   Service Layer  │───▶│   API External  │
+│ (HttpApiScreen) │    │(ChuckNorrisServ.)│    │ (chucknorris.io)│
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+         ▲                       ▲                       │
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   UI States     │    │   Data Models    │    │   JSON Response │
+│ (LoadingState)  │    │   (Joke.dart)    │    │   (Chuck Norris)│
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+```
 
 ---
 
@@ -237,6 +333,8 @@ La app usa `go_router` para navegación declarativa:
 - `/future_async` : FutureAsyncScreen (demo de asincronía)
 - `/timer` : TimerScreen (cronómetro con Timer)
 - `/isolate` : IsolateAdvancedScreen (tareas pesadas en isolates)
+- `/http_api` : HttpApiScreen (listado de chistes de Chuck Norris)
+- `/joke_detail` : JokeDetailScreen (detalle del chiste con parámetros)
 ```
 
 ---

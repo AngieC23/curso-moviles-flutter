@@ -156,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     border: Border.all(width: 1),
                   ),
                   child: Image.asset(
-                    'assets/logo.png',
+                    'assets/images/logo.png',
                     width: 80,
                     height: 80,
                     fit: BoxFit.cover,
