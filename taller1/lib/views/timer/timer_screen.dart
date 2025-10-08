@@ -72,7 +72,7 @@ class _TimerScreenState extends State<TimerScreen> with WidgetsBindingObserver {
           children: [
             // Información del demo
             Card(
-              color: Colors.blue.shade50,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -81,7 +81,7 @@ class _TimerScreenState extends State<TimerScreen> with WidgetsBindingObserver {
                       '⏱️ Demo de Timer en Flutter',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue.shade800,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     const SizedBox(height: 8),
