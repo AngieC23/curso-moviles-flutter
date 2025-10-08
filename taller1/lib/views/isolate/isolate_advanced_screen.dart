@@ -62,7 +62,7 @@ class _IsolateAdvancedScreenState extends State<IsolateAdvancedScreen> {
           children: [
             // Información del demo
             Card(
-              color: Colors.purple.shade50,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -71,7 +71,7 @@ class _IsolateAdvancedScreenState extends State<IsolateAdvancedScreen> {
                       '🔀 Demo de Isolates en Flutter',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Colors.purple.shade800,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -93,7 +93,7 @@ class _IsolateAdvancedScreenState extends State<IsolateAdvancedScreen> {
 
             // Estadísticas generales
             Card(
-              color: Colors.blue.shade50,
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -101,7 +101,7 @@ class _IsolateAdvancedScreenState extends State<IsolateAdvancedScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.analytics, color: Colors.blue),
+                        Icon(Icons.analytics, color: Theme.of(context).colorScheme.secondary),
                         const SizedBox(width: 8),
                         const Text(
                           'Estadísticas de Rendimiento',

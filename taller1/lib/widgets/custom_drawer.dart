@@ -27,11 +27,7 @@ class CustomDrawer extends StatelessWidget {
                 const CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.school,
-                    size: 35,
-                    color: Colors.teal,
-                  ),
+                  child: Icon(Icons.school, size: 35, color: Colors.teal),
                 ),
                 const SizedBox(height: 12),
                 const Text(
@@ -98,6 +94,15 @@ class CustomDrawer extends StatelessWidget {
               context.push('/widgets_demo');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.api, color: Colors.purple),
+            title: const Text('Jokes HTTP - API'),
+            subtitle: const Text('Consumo de API REST'),
+            onTap: () {
+              Navigator.pop(context);
+              context.push('/http_api');
+            },
+          ),
           const Divider(), // Separador visual
           // Sección de funcionalidades avanzadas
           Padding(
@@ -146,21 +151,25 @@ class CustomDrawer extends StatelessWidget {
               children: [
                 Text(
                   'Taller de Flutter',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'Desarrollo Móvil - UCEVA',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey.shade600,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: Colors.grey.shade600),
                 ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Icon(Icons.flutter_dash, size: 16, color: Colors.blue.shade400),
+                    Icon(
+                      Icons.flutter_dash,
+                      size: 16,
+                      color: Colors.blue.shade400,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       'Flutter & Dart',
